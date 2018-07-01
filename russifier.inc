@@ -56,8 +56,8 @@ forward OnPlayerRussifierSelect(playerid, bool:changed, RussifierType:type);
 */
 
 static
-	Text:TD_Background,
-	Text:TD_Text[RussifierType],
+	Text:TD_Background = Text:INVALID_TEXT_DRAW,
+	Text:TD_Text[RussifierType] = {INVALID_TEXT_DRAW, ...},
 	bool:IsSettingsShowed[MAX_PLAYERS char],
 	gSettingsText[RUSSIFIER_TEXT_LENGTH char] = !"Я могу прочитать этот текст, это мой русификатор";
 
@@ -182,10 +182,14 @@ stock Russifier_CreateTextDraws()
 
 stock Russifier_DestroyTextDraws()
 {
-	TextDrawDestroy(TD_Background);
+	if (TD_Background != Text:INVALID_TEXT_DRAW) {
+		TextDrawDestroy(TD_Background);
+	}
 
 	for (new RussifierType:type; type < TEXT_RUSSIFIERS_COUNT; type++) {
-		TextDrawDestroy(TD_Text[type]);
+		if (TD_Text[type] != Text:INVALID_TEXT_DRAW) {
+			TextDrawDestroy(TD_Text[type]);
+		}
 	}
 }
 
