@@ -2,7 +2,7 @@
 Russifer settings TextDraw window
 
 # Dependencies
-- [rustext](https://github.com/Open-GTO/rustext)
+- [rustext](https://github.com/ziggi/rustext)
 
 # Screenshot
 
