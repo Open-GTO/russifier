@@ -59,6 +59,7 @@ static
 	Text:TD_Background = Text:INVALID_TEXT_DRAW,
 	Text:TD_Text[RussifierType] = {INVALID_TEXT_DRAW, ...},
 	bool:IsSettingsShowed[MAX_PLAYERS char],
+	RussifierType:gPlayerRussifier[MAX_PLAYERS char],
 	gSettingsText[RUSSIFIER_TEXT_LENGTH char] = !"Я могу прочитать этот текст, это мой русификатор";
 
 const
@@ -207,7 +208,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 	for (new RussifierType:type; type < TEXT_RUSSIFIERS_COUNT; type++) {
 		if (TD_Text[type] == clickedid) {
-			SetPlayerRussifierType(playerid, type);
+			gPlayerRussifier{playerid} = type;
 			HidePlayerRussifierSettings(playerid);
 			CallLocalFunction("OnPlayerRussifierSelect", "iii", playerid, true, _:type);
 			return 1;
@@ -258,6 +259,8 @@ stock ShowPlayerRussifierSettings(playerid)
 		return 0;
 	}
 
+	gPlayerRussifier{playerid} = GetPlayerRussifierType(playerid);
+
 	for (new RussifierType:type; type < TEXT_RUSSIFIERS_COUNT; type++) {
 		SetPlayerRussifierType(playerid, type);
 		TextDrawShowForPlayer(playerid, TD_Text[type]);
@@ -274,6 +277,8 @@ stock HidePlayerRussifierSettings(playerid)
 	if (!IsPlayerConnected(playerid)) {
 		return 0;
 	}
+
+	SetPlayerRussifierType(playerid, gPlayerRussifier{playerid});
 
 	for (new RussifierType:type; type < TEXT_RUSSIFIERS_COUNT; type++) {
 		TextDrawHideForPlayer(playerid, TD_Text[type]);
