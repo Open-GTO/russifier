@@ -235,7 +235,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 	Functions
 */
 
-stock Russifier_SetText(string[])
+stock Russifier_SetText(const string[])
 {
 	strpack(gSettingsText, string, sizeof(gSettingsText));
 	Russifier_DestroyTextDraws();
